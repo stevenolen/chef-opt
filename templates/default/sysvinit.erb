@@ -1,0 +1,78 @@
+#!/bin/bash
+#
+# OPT
+# Managed by Chef for node <%= node['fqdn'] -%>.
+
+# chkconfig: 2345 82 55
+# processname: <%= @config.name %>
+# description: Runs thin for rails.
+NAME=<%= @config.name %>
+. /etc/rc.d/init.d/functions
+RAILS_ENV=<%= @config.rails_env %>
+APP_PATH=<%= "#{@config.deploy_path}/current" %>
+
+PID=$APP_PATH/tmp/pids/$NAME.pid
+LOCK=/var/lock/subsys/$NAME
+
+start() {
+  cd $APP_PATH
+
+  # Start thin
+  echo -n $"Starting $NAME: "
+  daemon "PATH=<%= @config.bundler_path %>:$PATH RAILS_ENV=$RAILS_ENV bundle exec thin start -d -u <%= @config.run_user %> -g <%= @config.run_group %> -p <%= @config.port %> -P $PID"
+  thin=$?
+  [ $thin -eq 0 ] && touch $LOCK
+  echo
+  retval=$thin
+  return $retval
+}
+
+stop() {
+  cd $APP_PATH
+
+  # Stop thin
+  echo -n $"Stopping $NAME: "
+  killproc -p $PID
+  thin=$?
+  [ $thin -eq 0 ] && rm -f $LOCK
+  echo
+  # return retval
+  return $thin
+}
+
+restart() {
+  stop
+  start
+}
+
+get_status() {
+  status -p $PID $NAME
+}
+
+query_status() {
+  get_status >/dev/null 2>&1
+}
+
+case "$1" in
+  start)
+    query_status && exit 0
+    start
+    ;;
+  stop)
+    query_status || exit 0
+    stop
+    ;;
+  restart)
+    restart
+    ;;
+  status)
+    get_status
+    ;;
+  *)
+    N=/etc/init.d/$NAME
+    echo "Usage: $N {start|stop|restart|status}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

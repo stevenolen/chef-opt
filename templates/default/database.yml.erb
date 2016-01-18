@@ -1,0 +1,10 @@
+# Managed by Chef for node <%= node['fqdn'] -%>.
+
+<%= @config.rails_env.downcase %>:
+  adapter: mysql2
+  encoding: utf8
+  database: <%= @config.db_name %>
+  username: <%= @config.db_user %>
+  password: <%= @config.db_password %>
+  host: <%= @config.db_host %>
+  port: <%= @config.db_port %>
