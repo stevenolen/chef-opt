@@ -9,7 +9,7 @@ class Chef
 
       attribute :name, kind_of: String, name_attribute: true
       attribute :repo, kind_of: String, default: 'git@github.com:ucla/opt.git'
-      attribute :revision, kind_of: String, default: '1.0.36'
+      attribute :revision, kind_of: String, default: 'master'
       attribute :port, kind_of: Integer, default: 3000
       attribute :run_user, kind_of: String, default: 'opt'
       attribute :run_group, kind_of: String, default: 'opt'
@@ -25,9 +25,10 @@ class Chef
       attribute :bundler_path, kind_of: String, default: nil
       attribute :rails_env, kind_of: String, default: 'production'
       attribute :deploy_key, kind_of: String, required: true
-      # attribute :secret, kind_of: String, required: true
-      # attribute :shib_secret, kind_of: String, default: nil
-      # attribute :shib_client_name, kind_of: String, default: nil
+      attribute :shib_secret, kind_of: String, default: nil
+      attribute :shib_client_name, kind_of: String, default: nil
+      attribute :shib_site, kind_of: String, default: nil
+      # attribute :secret, kind_of: String, required: true # hardcoded in source!?
     end
   end
 end

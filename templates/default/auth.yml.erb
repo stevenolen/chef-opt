@@ -1,0 +1,11 @@
+# Managed by Chef for node <%= node['fqdn'] -%>.
+
+oauth2_provider_shibboleth:
+  key: <%= @config.shib_client_name %>
+  secret: <%= @config.shib_secret %>
+  properties:
+    site: <%= @config.shib_site %>
+    authorize_url: /oauth2/test-authorize
+    token_url: /oauth2/access_token
+  routes:
+    get_user: /oauth2/user
