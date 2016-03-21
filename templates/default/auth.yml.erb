@@ -5,7 +5,7 @@ oauth2_provider_shibboleth:
   secret: <%= @config.shib_secret %>
   properties:
     site: <%= @config.shib_site %>
-    authorize_url: /oauth2/test-authorize
+    authorize_url: /oauth2/authorize
     token_url: /oauth2/access_token
   routes:
     get_user: /oauth2/user
