@@ -4,6 +4,7 @@ require_relative 'helpers'
 class Chef
   class Provider
     class Opt < Chef::Provider::LWRPBase # rubocop:disable ClassLength
+      provides :opt
       # Chef 11 LWRP DSL Methods
       use_inline_resources if defined?(use_inline_resources)
 
@@ -77,15 +78,15 @@ class Chef
           notifies :restart, "service[opt-#{new_resource.name}]", :delayed
         end
 
-        # secrets (hardcoded in source?)
-        # template "#{new_resource.deploy_path}/shared/config/secrets.yml" do
-        #   source 'secrets.yml.erb'
-        #   cookbook 'opt'
-        #   owner new_resource.run_user
-        #   group new_resource.run_group
-        #   variables(config: new_resource)
-        #   notifies :restart, "service[opt-#{new_resource.name}]", :delayed
-        # end
+        # secrets
+        template "#{new_resource.deploy_path}/shared/config/secrets.yml" do
+          source 'secrets.yml.erb'
+          cookbook 'opt'
+          owner new_resource.run_user
+          group new_resource.run_group
+          variables(config: new_resource)
+          notifies :restart, "service[opt-#{new_resource.name}]", :delayed
+        end
 
         # generate ES config file, only supports one instance currently.
         template "#{new_resource.deploy_path}/shared/config/elasticsearch.yml" do
@@ -128,6 +129,7 @@ class Chef
             'config/database.yml' => 'config/database.yml',
             'config/elasticsearch.yml' => 'config/elasticsearch.yml',
             'config/auth.yml' => 'config/auth.yml',
+            'config/secrets.yml' => 'config/secrets.yml',
             'bundle' => '.bundle'
           )
           before_migrate do

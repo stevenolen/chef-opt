@@ -28,7 +28,7 @@ class Chef
       attribute :shib_secret, kind_of: String, default: nil
       attribute :shib_client_name, kind_of: String, default: nil
       attribute :shib_site, kind_of: String, default: nil
-      # attribute :secret, kind_of: String, required: true # hardcoded in source!?
+      attribute :secret, kind_of: String, required: true
     end
   end
 end
