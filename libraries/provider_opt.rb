@@ -108,16 +108,6 @@ class Chef
           notifies :restart, "service[opt-#{new_resource.name}]", :delayed
         end
 
-        # generate recaptcha config file.
-        template "#{new_resource.deploy_path}/shared/config/recaptcha.yml" do
-          source 'recaptcha.yml.erb'
-          cookbook 'opt'
-          owner new_resource.run_user
-          group new_resource.run_group
-          variables(config: new_resource)
-          notifies :restart, "service[opt-#{new_resource.name}]", :delayed
-        end
-
         # required headers for mysql2, imagemagick gem (which gets installed with bundler below)
         # not OS compatible yet, refactor
         %w(mysql-devel sqlite sqlite-devel freetds freetds-devel).each do |pkg|
@@ -140,7 +130,6 @@ class Chef
             'config/elasticsearch.yml' => 'config/elasticsearch.yml',
             'config/auth.yml' => 'config/auth.yml',
             'config/secrets.yml' => 'config/secrets.yml',
-            'config/recaptcha.yml' => 'config/recaptcha.yml',
             'bundle' => '.bundle'
           )
           before_migrate do
