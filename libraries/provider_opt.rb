@@ -140,6 +140,7 @@ class Chef
             'config/elasticsearch.yml' => 'config/elasticsearch.yml',
             'config/auth.yml' => 'config/auth.yml',
             'config/secrets.yml' => 'config/secrets.yml',
+            'config/smtp.yml' => 'config/smtp.yml',
             'bundle' => '.bundle'
           )
           before_migrate do
