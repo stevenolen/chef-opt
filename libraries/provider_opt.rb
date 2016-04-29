@@ -108,6 +108,16 @@ class Chef
           notifies :restart, "service[opt-#{new_resource.name}]", :delayed
         end
 
+        # generate auth config file. for shib integration.
+        template "#{new_resource.deploy_path}/shared/config/smtp.yml" do
+          source 'smtp.yml.erb'
+          cookbook 'opt'
+          owner new_resource.run_user
+          group new_resource.run_group
+          variables(config: new_resource)
+          notifies :restart, "service[opt-#{new_resource.name}]", :delayed
+        end
+
         # required headers for mysql2, imagemagick gem (which gets installed with bundler below)
         # not OS compatible yet, refactor
         %w(mysql-devel sqlite sqlite-devel freetds freetds-devel).each do |pkg|

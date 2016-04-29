@@ -31,6 +31,9 @@ class Chef
       attribute :secret, kind_of: String, required: true
       attribute :recaptcha_public_key , kind_of: String, default: nil
       attribute :recaptcha_private_key , kind_of: String, default: nil
+      attribute :smtp_host, kind_of: String, default: 'localhost'
+      attribute :smtp_username, kind_of: String, default: ''
+      attribute :smtp_password, kind_of: String, default: ''
     end
   end
 end
