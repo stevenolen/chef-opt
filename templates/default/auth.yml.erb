@@ -9,3 +9,10 @@ oauth2_provider_shibboleth:
     token_url: /oauth2/access_token
   routes:
     get_user: /oauth2/user
+    
+esb_secret:
+  user: <%= @config.esb_user %>
+  pass: <%= @config.esb_path %>
+  auth_url: <%= @config.esb_auth_url %>
+  cert: <%= @config.esb_cert %>
+  key: <%= @config.esb_key %>
