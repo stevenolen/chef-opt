@@ -5,7 +5,7 @@
 
 # chkconfig: 2345 82 55
 # processname: <%= @config.name %>
-# description: Runs thin for rails.
+# description: Runs puma for rails.
 NAME=<%= @config.name %>
 . /etc/rc.d/init.d/functions
 RAILS_ENV=<%= @config.rails_env %>
@@ -17,27 +17,28 @@ LOCK=/var/lock/subsys/$NAME
 start() {
   cd $APP_PATH
 
-  # Start thin
+  # Start puma
   echo -n $"Starting $NAME: "
-  daemon "PATH=<%= @config.bundler_path %>:$PATH RAILS_ENV=$RAILS_ENV bundle exec thin start -d -u <%= @config.run_user %> -g <%= @config.run_group %> -p <%= @config.port %> -P $PID"
-  thin=$?
-  [ $thin -eq 0 ] && touch $LOCK
+#  daemon "PATH=<%= @config.bundler_path %>:$PATH RAILS_ENV=$RAILS_ENV bundle exec thin start -d -u <%= @config.run_user %> -g <%= @config.run_group %> -p <%= @config.port %> -P $PID"
+  daemon "PATH=<%= @config.bundler_path %>:$PATH RAILS_ENV=$RAILS_ENV bundle exec puma -d -w 2 -p <%= @config.port %> --pidfile $PID"
+  puma=$?
+  [ $puma -eq 0 ] && touch $LOCK
   echo
-  retval=$thin
+  retval=$puma
   return $retval
 }
 
 stop() {
   cd $APP_PATH
 
-  # Stop thin
+  # Stop puma
   echo -n $"Stopping $NAME: "
   killproc -p $PID
-  thin=$?
-  [ $thin -eq 0 ] && rm -f $LOCK
+  puma=$?
+  [ $puma -eq 0 ] && rm -f $LOCK
   echo
   # return retval
-  return $thin
+  return $puma
 }
 
 restart() {
