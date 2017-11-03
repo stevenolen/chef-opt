@@ -10,8 +10,9 @@ NAME=<%= @config.name %>
 . /etc/rc.d/init.d/functions
 RAILS_ENV=<%= @config.rails_env %>
 APP_PATH=<%= "#{@config.deploy_path}/current" %>
+PID_PATH=/var/opt/shared
 
-PID=$APP_PATH/tmp/pids/$NAME.pid
+PID=$PID_PATH/pids/$NAME.pid
 LOCK=/var/lock/subsys/$NAME
 
 start() {
