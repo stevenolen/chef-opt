@@ -35,7 +35,7 @@ stop() {
 
   # Stop puma
   echo -n $"Stopping $NAME: "
-  killproc -p $PID
+  kill `cat $PID`
   puma=$?
   [ $puma -eq 0 ] && rm -f $LOCK
   echo
