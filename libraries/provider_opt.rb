@@ -149,6 +149,9 @@ class Chef
               cwd release_path
               command "bundle install --path #{opt_resource.deploy_path}/shared/bundle"
             end
+            execute 'npm config set strict-ssl false' do
+              cwd release_path
+            end
             execute 'npm install' do
               cwd release_path
             end
