@@ -176,7 +176,7 @@ class Chef
             'log' => 'log',
             'pids' => 'tmp/pids'
           )
-          restart_command "service opt-#{opt_resource.name} restart"
+          notifies :restart, "service[opt-#{new_resource.name}]", :delayed
         end
 
         service "opt-#{new_resource.name}" do
