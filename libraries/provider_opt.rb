@@ -149,16 +149,12 @@ class Chef
               cwd release_path
               command "bundle install --path #{opt_resource.deploy_path}/shared/bundle"
             end
-            execute 'npm config set strict-ssl false' do
-              cwd release_path
-            end
-            execute 'npm install' do
-              cwd release_path
-            end
-            execute 'block build' do
+          end
+          before_restart do
+            execute 'precompile assets' do
               environment 'PATH' => computed_path
               cwd release_path
-              command 'bundle exec blocks build'
+              command "RAILS_ENV=#{opt_resource.rails_env} bundle exec rake assets:precompile"
             end
           end
           migrate true
