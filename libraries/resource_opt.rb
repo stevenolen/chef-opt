@@ -25,9 +25,7 @@ class Chef
       attribute :bundler_path, kind_of: String, default: nil
       attribute :rails_env, kind_of: String, default: 'production'
       attribute :deploy_key, kind_of: String, required: true
-      attribute :shib_secret, kind_of: String, default: nil
-      attribute :shib_client_name, kind_of: String, default: nil
-      attribute :shib_site, kind_of: String, default: nil
+      attribute :keycloak_site, kind_of: String, default: nil
       attribute :esb_user, kind_of: String, default: nil
       attribute :esb_pass, kind_of: String, default: nil
       attribute :esb_auth_url, kind_of: String, default: nil
