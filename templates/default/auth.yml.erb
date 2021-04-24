@@ -9,9 +9,8 @@ omniauth:
     authorize_params:
       kc_idp_hint: uclashib
 
-esb_secret:
-  user: <%= @config.esb_user %>
-  pass: <%= @config.esb_pass %>
-  auth_url: <%= @config.esb_auth_url %>
-  cert: <%= @config.esb_cert %>
-  key: <%= @config.esb_key %>
+registrar:
+  auth_url: <%= @config.registrar_auth_url %>
+  url_base: <%= @config.registrar_url_base %>
+  key: <%= @config.registrar_key %>
+  secret: <%= @config.registrar_secret %>

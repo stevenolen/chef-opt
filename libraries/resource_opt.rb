@@ -26,11 +26,10 @@ class Chef
       attribute :rails_env, kind_of: String, default: 'production'
       attribute :deploy_key, kind_of: String, required: true
       attribute :keycloak_site, kind_of: String, default: nil
-      attribute :esb_user, kind_of: String, default: nil
-      attribute :esb_pass, kind_of: String, default: nil
-      attribute :esb_auth_url, kind_of: String, default: nil
-      attribute :esb_cert, kind_of: String, default: nil
-      attribute :esb_key, kind_of: String, default: nil
+      attribute :registrar_auth_url, kind_of: String, default: nil
+      attribute :registrar_url_base, kind_of: String, default: nil
+      attribute :registrar_key, kind_of: String, default: nil
+      attribute :registrar_secret, kind_of: String, default: nil
       attribute :secret, kind_of: String, required: true
       attribute :recaptcha_public_key , kind_of: String, default: nil
       attribute :recaptcha_private_key , kind_of: String, default: nil
